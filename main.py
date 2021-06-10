@@ -1,21 +1,8 @@
 import sys
 
-''' Approach del pipe
--Usar LCS y olbtener así el substring en común más largo
--Descartar este substring de ambos strings originales para así obtener las diferencias
--Guardar posiciones de las coincidencias para así obtener matches entre diferencias
--Matchear diferencias y printearlas
-
-'''
-
-'''
--Encontrar directamente las diferencias y parar en cada coincidencia para así matchear correctamente
--Guardar diferencias para encontrar la minima cantidad de pares de substrings(dinamismo)
-
-'''
 
 # Recibe ambos string originales y encuentra el el subtring en común
-# 
+# Caracter Ambos Strings Encontrados
 def CASE(palabra1, palabra2):
     lp1 = len(palabra1)
     lp2 = len(palabra2)
