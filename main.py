@@ -1,23 +1,36 @@
 import sys
 
+#La memoizatiation de CASE hace que se calcule solamente una vez por largo de palabra 
+#el CASE necesario, y así ahorrando calculos en el caso que se necesita el CASE más largo.
+#CASE se explica en la funcion, que está justo abajo.
 
 # Recibe ambos string originales y encuentra el el subtring en común
 # Caracter Ambos Strings Encontrados
-def CASE(palabra1, palabra2):
+def CASE(palabra1, palabra2, memo=[]):
     lp1 = len(palabra1)
     lp2 = len(palabra2)
+
+    if len(memo) == 0:
+        for i in range(lp1):
+            memo.append([-1 for i in range(lp2)])
+
+    #memoization retorna el caso calculado de CASE si es que existe
+    if memo[lp1-1][lp2-1] != -1:
+        return memo[lp1-1][lp2-1]
+
 
     if lp1 == 0 or lp2 == 0:
         return ""
 
     if palabra1[lp1-1] == palabra2[lp2-1]:
-        return CASE(palabra1[:-1], palabra2[:-1]) + palabra1[lp1-1]
+        memo[lp1-1][lp2-1] = CASE(palabra1[:-1], palabra2[:-1], memo) + palabra1[lp1-1]
+        return CASE(palabra1[:-1], palabra2[:-1], memo) + palabra1[lp1-1]
 
     else:
-        r1 = CASE(palabra1, palabra2[:-1])
-        r2 = CASE(palabra1[:-1], palabra2)
+        r1 = CASE(palabra1, palabra2[:-1], memo)
+        r2 = CASE(palabra1[:-1], palabra2, memo)
 
-        if r1 > r2:
+        if len(r1) > len(r2):
             return r1
 
         return r2
@@ -28,7 +41,7 @@ def CASE(palabra1, palabra2):
 
 def slice(p1, p2):
     cruces = []
-    s = CASE(p1, p2) #GJAB
+    s = CASE(p1, p2, []) #GJAB
     posPrev = 0
     posPrev2 = 0
 
